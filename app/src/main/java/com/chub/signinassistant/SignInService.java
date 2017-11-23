@@ -29,7 +29,9 @@ public class SignInService extends Service {
     private ScheduledExecutorService executorService;
     private long delayTime;
     private int i;
-
+    /**
+     * 处理后台操作程序
+     */
     private Runnable run = new Runnable() {
         @Override
         public void run() {

@@ -13,7 +13,7 @@ import static com.chub.signinassistant.util.Config.APP_DEBUG;
 
 /**
  * Created by Chub on 2017/11/23.
- * 监听手机开机和解锁
+ * 对手机监听实现自动唤醒服务功能
  */
 public class MyReceiver extends BroadcastReceiver {
 

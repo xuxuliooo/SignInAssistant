@@ -21,7 +21,6 @@ public class Config {
     /**
      * 一天的毫秒数
      */
-    public static final long ONE_DAY_MS = 2 * 60 * 1000;
-    //    public static final long ONE_DAY_MS = 24 * 60 * 60 * 1000;
+    public static final long ONE_DAY_MS = 60 * 60 * 1000;
 
 }
