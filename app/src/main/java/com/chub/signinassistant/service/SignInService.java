@@ -62,8 +62,11 @@ public class SignInService extends Service {
             List<LoginEntity> users = UserHelp.getInstance(getApplicationContext()).findAll();
             if (users != null) {
                 for (LoginEntity user : users) {
-                    if (!user.signInIsOneDay())
-                        signIn(user);
+                    if (user != null) {
+                        if (APP_DEBUG) Log.e(TAG, "user:" + user.toString());
+                        if (!user.signInIsOneDay())
+                            signIn(user);
+                    }
                 }
             }
         }
@@ -75,12 +78,14 @@ public class SignInService extends Service {
         HttpUtil.get(URL_CHECK_SIGN_IN, params, CheckResult.class, new HttpUtil.OnRequestCallBack<CheckResult>() {
             @Override
             public void onRequestSuccess(CheckResult response) {
+                if (APP_DEBUG) Log.e(TAG, response.toString());
                 if (response.getCode() == 200) {
                     CheckSignEntity signEntity = response.getData();
                     if (signEntity != null) {
                         if (!signEntity.Sign()) {
                             userSign(data);
                         } else {
+                            if (APP_DEBUG) Log.e(TAG, "保存签到记录");
                             data.setLastSignTime(String.valueOf(System.currentTimeMillis()));
                             UserHelp.getInstance(getApplication()).update(data.getUser_id(), data);
                         }
@@ -90,7 +95,7 @@ public class SignInService extends Service {
 
             @Override
             public void onRequestFailure(Request request, Exception error) {
-
+                if (APP_DEBUG) Log.e(TAG, "服务器响应超时");
             }
         });
     }
@@ -103,15 +108,17 @@ public class SignInService extends Service {
             @Override
             public void onRequestSuccess(Response response) {
                 if (response.getCode() == 200) {//保存签到时间
+                    if (APP_DEBUG) Log.e(TAG, "签到成功");
                     SignHelp.getInstance(getApplicationContext()).insert(new SignBean(data.getUser_id(), String.valueOf(System.currentTimeMillis())));
                     data.setLastSignTime(String.valueOf(System.currentTimeMillis()));
                     UserHelp.getInstance(getApplicationContext()).update(data.getUser_id(), data);
                 }
+                if (APP_DEBUG) Log.e(TAG, "签到失败");
             }
 
             @Override
             public void onRequestFailure(Request request, Exception error) {
-
+                if (APP_DEBUG) Log.e(TAG, "服务器响应超时");
             }
         });
     }

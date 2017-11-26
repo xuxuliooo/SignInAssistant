@@ -254,6 +254,8 @@ public class LoginEntity {
      * @return boolean boolean
      */
     public boolean signInIsOneDay() {
+        if (TextUtils.isEmpty(lastSignTime))
+            return false;
         String signTime = DefaultUtil.dateToString(Long.valueOf(lastSignTime), "yyyyMMdd");
         String sysTime = DefaultUtil.dateToString(System.currentTimeMillis(), "yyyyMMdd");
         return TextUtils.equals(signTime, sysTime);

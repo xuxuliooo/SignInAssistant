@@ -63,8 +63,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     private View mProgressView;
     private View mLoginFormView;
     private boolean isRequest;
-    private Set<String> userList;
-    private Gson mGson;
 
     @Override
     protected int getLayoutId() {
@@ -74,9 +72,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     @Override
     protected void init() {
 //        populateAutoComplete();
-        if (userList != null) {
-            addUsersToAutoComplete(userList);
-        }
 
         findViewById(R.id.forget_pw).setOnClickListener(new OnClickListener() {
             @Override
