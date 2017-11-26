@@ -63,9 +63,17 @@ public class UserHelp {
     public void insert(LoginEntity data) {
         LoginEntity loginEntity = findByUserId(data.getUser_id());
         if (loginEntity == null) {
-            long insert = db.insert(SQLiteHelp.UserTable.KEY_TABLE_NAME, SQLiteHelp.ID, data.buildValues());
-            if (insert == -1 && APP_DEBUG) {
-                Log.d(TAG, "insert data to table error!");
+            db.beginTransaction();
+            try {
+                long insert = db.insert(SQLiteHelp.UserTable.KEY_TABLE_NAME, SQLiteHelp.ID, data.buildValues());
+                if (insert == -1 && APP_DEBUG) {
+                    Log.d(TAG, "insert data to table error!");
+                }
+                db.setTransactionSuccessful();
+            } catch (Exception e) {
+                Log.e(TAG, "e:" + e);
+            } finally {
+                db.endTransaction();
             }
         } else {
             update(loginEntity.getUser_id(), data);
@@ -79,9 +87,18 @@ public class UserHelp {
      * @param data   the data
      */
     public void update(String userId, LoginEntity data) {
-        int result = db.update(SQLiteHelp.UserTable.KEY_TABLE_NAME, data.buildValues(), KEY_USER_ID + " = ?", new String[]{userId});
-        if (result == -1 && APP_DEBUG) {
-            Log.e(TAG, "update by id error!");
+        db.beginTransaction();
+        try {
+            int result = db.update(SQLiteHelp.UserTable.KEY_TABLE_NAME, data.buildValues(), KEY_USER_ID + " = ?", new String[]{userId});
+            if (result == -1 && APP_DEBUG) {
+                Log.e(TAG, "update by id error!");
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            if (APP_DEBUG)
+                Log.e(TAG, "e:" + e);
+        } finally {
+            db.endTransaction();
         }
     }
 
@@ -107,9 +124,18 @@ public class UserHelp {
      * @param userId the user id
      */
     public void deleteById(String userId) {
-        int result = db.delete(SQLiteHelp.UserTable.KEY_TABLE_NAME, KEY_USER_ID + " = ?", new String[]{userId});
-        if (result == -1 && APP_DEBUG) {
-            Log.e(TAG, "delete by id error!");
+        db.beginTransaction();
+        try {
+            int result = db.delete(SQLiteHelp.UserTable.KEY_TABLE_NAME, KEY_USER_ID + " = ?", new String[]{userId});
+            if (result == -1 && APP_DEBUG) {
+                Log.e(TAG, "delete by id error!");
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            if (APP_DEBUG)
+                Log.e(TAG, "e:" + e);
+        } finally {
+            db.endTransaction();
         }
     }
 
@@ -117,7 +143,19 @@ public class UserHelp {
      * Delete all.
      */
     public void deleteAll() {
-        db.delete(SQLiteHelp.UserTable.KEY_TABLE_NAME, null, null);
+        db.beginTransaction();
+        try {
+            int result = db.delete(SQLiteHelp.UserTable.KEY_TABLE_NAME, null, null);
+            if (result == -1 && APP_DEBUG) {
+                Log.e(TAG, "delete all data error!");
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            if (APP_DEBUG)
+                Log.e(TAG, "e:" + e);
+        } finally {
+            db.endTransaction();
+        }
     }
 
     /**

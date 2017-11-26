@@ -59,9 +59,18 @@ public class SignHelp {
      * @param bean the bean
      */
     public void insert(SignBean bean) {
-        long result = db.insert(SQLiteHelp.SignTable.KEY_TABLE_NAME, SQLiteHelp.ID, bean.buildValues());
-        if (result == -1 && APP_DEBUG) {
-            Log.d(TAG, "insert data to table error!");
+        db.beginTransaction();
+        try {
+            long result = db.insert(SQLiteHelp.SignTable.KEY_TABLE_NAME, SQLiteHelp.ID, bean.buildValues());
+            if (result == -1 && APP_DEBUG) {
+                Log.d(TAG, "insert data to table error!");
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            if (APP_DEBUG)
+                Log.e(TAG, "e:" + e);
+        } finally {
+            db.endTransaction();
         }
     }
 
@@ -148,9 +157,18 @@ public class SignHelp {
      * @param id the id
      */
     public void deleteById(int id) {
-        int result = db.delete(SQLiteHelp.SignTable.KEY_TABLE_NAME, SQLiteHelp.ID + " = ?", new String[]{String.valueOf(id)});
-        if (result == -1 && APP_DEBUG) {
-            Log.e(TAG, "delete data by id error!");
+        db.beginTransaction();
+        try {
+            int result = db.delete(SQLiteHelp.SignTable.KEY_TABLE_NAME, SQLiteHelp.ID + " = ?", new String[]{String.valueOf(id)});
+            if (result == -1 && APP_DEBUG) {
+                Log.e(TAG, "delete data by id error!");
+            }
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            if (APP_DEBUG)
+                Log.e(TAG, "e:" + e);
+        } finally {
+            db.endTransaction();
         }
     }
 }
