@@ -4,6 +4,8 @@
     <string name="log_in">账号登录</string>
     <string name="sign_in_log">签到日志</string>
     <string name="title_activity_login">@string/log_in</string>
+    <string name="sign_log">签到记录</string>
+    <string name="sign_in">签到</string>
 
     <!-- Strings related to login -->
     <string name="account">账号</string>
@@ -37,4 +39,5 @@
     <string name="re_get">重新获取</string>
     <string name="log_in_ok">登录成功!</string>
     <string name="back">返回</string>
+    <string name="delete">删除</string>
 </resources>

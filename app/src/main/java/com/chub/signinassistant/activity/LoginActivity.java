@@ -15,7 +15,6 @@ import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,12 +30,11 @@ import com.chub.signinassistant.base.BaseActivity;
 import com.chub.signinassistant.bean.LoginEntity;
 import com.chub.signinassistant.bean.LoginResult;
 import com.chub.signinassistant.util.HttpUtil;
-import com.chub.signinassistant.util.SPUtils;
+import com.chub.signinassistant.util.UserHelp;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,7 +42,6 @@ import java.util.Set;
 import okhttp3.Request;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static com.chub.signinassistant.util.Config.KEY_ID;
 import static com.chub.signinassistant.util.Config.URL_LOGIN;
 import static com.chub.signinassistant.util.DefaultUtil.MD5;
 
@@ -77,7 +74,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     @Override
     protected void init() {
 //        populateAutoComplete();
-        userList = SPUtils.getStringSet(getApplicationContext(), KEY_ID);
         if (userList != null) {
             addUsersToAutoComplete(userList);
         }
@@ -233,33 +229,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         showInputKeyBoard(mAccountView);
                     } else if (response.getCode() == 200) {
                         List<LoginEntity> data = response.getData();
-                        boolean isAdd = false;
                         if (data != null && !data.isEmpty()) {
                             LoginEntity entity = data.get(0);
-                            String text = Base64.encodeToString(entity.toString().getBytes(), Base64.DEFAULT);
-                            if (userList != null) {
-                                boolean contains = false;
-                                for (String key : userList) {
-                                    String json = new String(Base64.decode(key, Base64.DEFAULT));
-                                    if (mGson == null) {
-                                        mGson = new Gson();
-                                    }
-                                    LoginEntity loginEntity = mGson.fromJson(json, LoginEntity.class);
-                                    if (TextUtils.equals(loginEntity.getLogin_tel(), entity.getLogin_tel()))
-                                        contains = true;
-                                }
-                                if (!contains) {
-                                    userList.add(text);
-                                    isAdd = true;
-                                }
-
-                            } else {
-                                userList = new HashSet<>();
-                                userList.add(text);
-                                isAdd = true;
-                            }
-                            if (isAdd)
-                                SPUtils.save(getApplicationContext(), KEY_ID, userList);
+                            UserHelp.getInstance(getApplicationContext()).insert(entity);
                         }
                         showSnackBar(R.string.log_in_ok, R.string.back, new OnClickListener() {
                             @Override

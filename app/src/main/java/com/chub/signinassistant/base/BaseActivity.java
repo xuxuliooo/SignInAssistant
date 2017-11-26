@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,6 +19,10 @@ import com.chub.signinassistant.R;
  * Created by Chub on 2017/11/25.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+
+    static{
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private Snackbar snackbar;
 

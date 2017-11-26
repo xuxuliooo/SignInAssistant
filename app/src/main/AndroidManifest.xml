@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.chub.signinassistant">
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -15,11 +16,13 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait">
@@ -32,7 +35,9 @@
 
         <service android:name=".service.SignInService" />
 
-        <receiver android:name=".receiver.MyReceiver">
+        <receiver
+            android:name=".receiver.MyReceiver"
+            android:label="@string/sign_in">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
@@ -52,6 +57,10 @@
         <activity
             android:name=".activity.ResetPWActivity"
             android:label="@string/reset_pw"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SignLogActivity"
+            android:label="@string/sign_log"
             android:screenOrientation="portrait" />
 
     </application>

@@ -3,4 +3,29 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="default0">#ffda70d6</color>
+    <color name="default1">#ff7ecef4</color>
+    <color name="default2">#ffb3d465</color>
+    <color name="default3">#ffcce198</color>
+    <color name="default4">#ff8c97cb</color>
+    <color name="default5">#ffe5a488</color>
+    <color name="default6">#fff19ec2</color>
+    <color name="default7">#ffd0ca76</color>
+    <color name="default8">#ff84ccc9</color>
+    <color name="default9">#ffd1c0a5</color>
+    <color name="default10">#ffc0a1d2</color>
+    <color name="default11">#ffcfa972</color>
+    <color name="default12">#ffe77aab</color>
+    <color name="default13">#ffee7f32</color>
+    <color name="default14">#ff1489bd</color>
+    <color name="default15">#ffbb8e45</color>
+    <color name="default16">#ff5abcba</color>
+    <color name="default17">#fffd7461</color>
+    <color name="default18">#ffb57dac</color>
+    <color name="default19">#ff91693b</color>
+    <color name="default20">#ff3192dd</color>
+    <color name="default21">#ff7aa93e</color>
+    <color name="default22">#ff647ab3</color>
+
 </resources>

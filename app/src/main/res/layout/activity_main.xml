@@ -11,31 +11,31 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="150dp"
+        android:minWidth="@dimen/_150dp"
         android:onClick="click"
         android:text="@string/log_in" />
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/_10dp" />
 
     <Button
         android:id="@+id/sign_in_log"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="150dp"
+        android:minWidth="@dimen/_150dp"
         android:onClick="click"
         android:text="@string/sign_in_log" />
 
     <Space
         android:layout_width="wrap_content"
-        android:layout_height="10dp" />
+        android:layout_height="@dimen/_10dp" />
 
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="150dp"
+        android:minWidth="@dimen/_150dp"
         android:onClick="click"
         android:text="@string/backgrounder" />
 

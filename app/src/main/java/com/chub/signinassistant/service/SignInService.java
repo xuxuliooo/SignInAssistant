@@ -4,22 +4,22 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Base64;
 import android.util.Log;
 
 import com.chub.signinassistant.bean.CheckResult;
 import com.chub.signinassistant.bean.CheckSignEntity;
 import com.chub.signinassistant.bean.LoginEntity;
 import com.chub.signinassistant.bean.Response;
+import com.chub.signinassistant.bean.SignBean;
 import com.chub.signinassistant.util.DefaultUtil;
 import com.chub.signinassistant.util.HttpUtil;
 import com.chub.signinassistant.util.SPUtils;
-import com.google.gson.Gson;
+import com.chub.signinassistant.util.SignHelp;
+import com.chub.signinassistant.util.UserHelp;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -28,13 +28,10 @@ import okhttp3.Request;
 
 import static com.chub.signinassistant.util.Config.APP_DEBUG;
 import static com.chub.signinassistant.util.Config.INTERVAL_TIME_MILLI;
-import static com.chub.signinassistant.util.Config.KEY_ID;
-import static com.chub.signinassistant.util.Config.KEY_SIGN_DATE;
 import static com.chub.signinassistant.util.Config.LAST_TIME;
 import static com.chub.signinassistant.util.Config.UPLOAD_NUMBERS;
 import static com.chub.signinassistant.util.Config.URL_CHECK_SIGN_IN;
 import static com.chub.signinassistant.util.Config.URL_SIGN_IN;
-import static com.chub.signinassistant.util.DefaultUtil.dateToString;
 
 /**
  * Created by Chub on 2017/11/23.
@@ -49,7 +46,6 @@ public class SignInService extends Service {
     private long delayTime;
     private int i;
 
-    private Gson mGson;
 
     /**
      * 处理后台操作程序
@@ -63,13 +59,12 @@ public class SignInService extends Service {
 
             SPUtils.save(getApplicationContext(), LAST_TIME, System.currentTimeMillis());
             SPUtils.save(getApplicationContext(), UPLOAD_NUMBERS, i);
-            Set<String> keySet = SPUtils.getStringSet(getApplicationContext(), KEY_ID);
-            if (keySet == null) return;
-
-            for (String key : keySet) {
-                byte[] bytes = Base64.decode(key, Base64.DEFAULT);
-                LoginEntity item = mGson.fromJson(new String(bytes), LoginEntity.class);
-                signIn(item);
+            List<LoginEntity> users = UserHelp.getInstance(getApplicationContext()).findAll();
+            if (users != null) {
+                for (LoginEntity user : users) {
+                    if (!user.signInIsOneDay())
+                        signIn(user);
+                }
             }
         }
     };
@@ -82,11 +77,15 @@ public class SignInService extends Service {
             public void onRequestSuccess(CheckResult response) {
                 if (response.getCode() == 200) {
                     CheckSignEntity signEntity = response.getData();
-                    if (signEntity != null && !signEntity.Sign()) {
-                        userSign(data);
+                    if (signEntity != null) {
+                        if (!signEntity.Sign()) {
+                            userSign(data);
+                        } else {
+                            data.setLastSignTime(String.valueOf(System.currentTimeMillis()));
+                            UserHelp.getInstance(getApplication()).update(data.getUser_id(), data);
+                        }
                     }
                 }
-
             }
 
             @Override
@@ -103,13 +102,10 @@ public class SignInService extends Service {
 
             @Override
             public void onRequestSuccess(Response response) {
-                if (response.getCode() == 200) {
-                    Set<String> keySet = SPUtils.getStringSet(getApplicationContext(), KEY_SIGN_DATE);
-                    if (keySet == null) {
-                        keySet = new HashSet<>();
-                    }
-                    keySet.add(data.getLogin_tel() + ":" + dateToString(System.currentTimeMillis()));
-                    SPUtils.save(getApplicationContext(), KEY_SIGN_DATE, keySet);
+                if (response.getCode() == 200) {//保存签到时间
+                    SignHelp.getInstance(getApplicationContext()).insert(new SignBean(data.getUser_id(), String.valueOf(System.currentTimeMillis())));
+                    data.setLastSignTime(String.valueOf(System.currentTimeMillis()));
+                    UserHelp.getInstance(getApplicationContext()).update(data.getUser_id(), data);
                 }
             }
 
@@ -130,7 +126,6 @@ public class SignInService extends Service {
         i = SPUtils.getInt(getApplicationContext(), UPLOAD_NUMBERS, i);
         long last_time = SPUtils.getLong(getApplicationContext(), LAST_TIME, System.currentTimeMillis());
         long intervalTime = System.currentTimeMillis() - last_time;
-        mGson = new Gson();
         delayTime = intervalTime % INTERVAL_TIME_MILLI == 0 ? 0 : INTERVAL_TIME_MILLI - intervalTime % INTERVAL_TIME_MILLI;
     }
 

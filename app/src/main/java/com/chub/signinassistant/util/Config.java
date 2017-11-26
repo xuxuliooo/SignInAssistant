@@ -1,5 +1,9 @@
 package com.chub.signinassistant.util;
 
+import android.text.TextUtils;
+
+import com.chub.signinassistant.R;
+
 /**
  * Created by Chub on 2017/11/23.
  * 常量
@@ -28,14 +32,11 @@ public class Config {
      * 间隔时间
      */
     public static final long INTERVAL_TIME_MILLI = 2 * 60 * 60 * 1000;
+
     /**
-     * 保存账号信息
+     * 中国时间风格
      */
-    public static final String KEY_ID = "account_number";
-    /**
-     * 签到日期
-     */
-    public static final String KEY_SIGN_DATE = "sign_date";
+    public static final String CHINA_TIME_STYLE = "yyyy年MM月dd日 HH时mm分ss秒";
 
 
     /**
@@ -70,4 +71,48 @@ public class Config {
      * 获取短信验证码
      */
     public static final String URL_GET_CONFIRM_CODE = URL_HOME_PHP + "?command=sendTelByForget&tel=0086";
+    /**
+     * 图片服务器前缀
+     */
+    private static final String URL_IMG_PREFIX = "https://cdn.yi-youtrip.com";
+
+    /**
+     * 添加Url前缀
+     */
+    public static String AppendImageUrlPrefix(String url) {
+        return TextUtils.isEmpty(url) || url.startsWith("http") ? url : URL_IMG_PREFIX + url;
+    }
+
+    private static final int[] COLOR_RES_VALUE = {
+            R.color.default0,
+            R.color.default1,
+            R.color.default2,
+            R.color.default3,
+            R.color.default4,
+            R.color.default5,
+            R.color.default6,
+            R.color.default7,
+            R.color.default8,
+            R.color.default9,
+            R.color.default10,
+            R.color.default11,
+            R.color.default12,
+            R.color.default13,
+            R.color.default14,
+            R.color.default15,
+            R.color.default16,
+            R.color.default17,
+            R.color.default18,
+            R.color.default19,
+            R.color.default20,
+            R.color.default21,
+            R.color.default22,
+    };
+
+    /**
+     * 获取指定位置的颜色
+     */
+    public static int getDefaultColor(int position) {
+        return COLOR_RES_VALUE[position % COLOR_RES_VALUE.length];
+    }
 }

@@ -1,5 +1,6 @@
 package com.chub.signinassistant.base;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +107,11 @@ public abstract class BaseAdapter<T, VH extends BaseAdapter.ViewHolder> extends 
         /**
          * The Item view.
          */
-        View itemView;
+        public View itemView;
+        /**
+         * The Context.
+         */
+        public Context ctx;
 
         /**
          * Instantiates a new View holder.
@@ -115,6 +120,7 @@ public abstract class BaseAdapter<T, VH extends BaseAdapter.ViewHolder> extends 
          */
         public ViewHolder(View itemView) {
             this.itemView = itemView;
+            this.ctx = itemView.getContext();
         }
     }
 

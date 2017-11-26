@@ -77,8 +77,21 @@ public class DefaultUtil {
      */
     @SuppressLint("SimpleDateFormat")
     public static String dateToString(long time) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return dateToString(time, "yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * Date to string string.
+     *
+     * @param time      the time
+     * @param timeStyle the time style
+     * @return the string
+     */
+    @SuppressLint("SimpleDateFormat")
+    public static String dateToString(long time, String timeStyle) {
+        SimpleDateFormat sdf = new SimpleDateFormat(timeStyle);
         return sdf.format(new Date(time));
     }
+
 
 }
