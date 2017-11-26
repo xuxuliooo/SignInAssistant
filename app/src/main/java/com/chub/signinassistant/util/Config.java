@@ -28,10 +28,9 @@ public class Config {
      */
     public static final String UPLOAD_NUMBERS = "upload_the_number";
     /**
-     * 一天的毫秒数
      * 间隔时间
      */
-    public static final long INTERVAL_TIME_MILLI = 2 * 60 * 60 * 1000;
+    public static final long INTERVAL_TIME_MILLI = 60 * 60 * 1000;
 
     /**
      * 中国时间风格

@@ -43,7 +43,15 @@ public class SignLogActivity extends BaseActivity implements AdapterView.OnItemC
     protected void onResume() {
         super.onResume();
         list = SignHelp.getInstance(getApplicationContext()).findAllLog();
-        adapter.notifyDataSetChanged();
+        if (list == null || list.isEmpty())
+            showConfirmDialog(getString(R.string.no_data), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+        else
+            adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -74,7 +82,7 @@ public class SignLogActivity extends BaseActivity implements AdapterView.OnItemC
 
     @Override
     public void onClick(int position, final SignInLogBean data) {
-        showAlertDialog(getString(R.string.no_account), false, new DialogInterface.OnClickListener() {
+        showAlertDialog(getString(R.string.confirm_delete_data), false, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 list.remove(data);

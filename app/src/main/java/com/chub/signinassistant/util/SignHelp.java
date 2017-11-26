@@ -142,6 +142,11 @@ public class SignHelp {
         return findAllLogById(null);
     }
 
+    /**
+     * Delete by id.
+     *
+     * @param id the id
+     */
     public void deleteById(int id) {
         int result = db.delete(SQLiteHelp.SignTable.KEY_TABLE_NAME, SQLiteHelp.ID + " = ?", new String[]{String.valueOf(id)});
         if (result == -1 && APP_DEBUG) {

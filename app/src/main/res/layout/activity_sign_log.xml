@@ -6,4 +6,5 @@
     android:layout_height="match_parent"
     android:divider="@drawable/div"
     android:dividerHeight="1dp"
-    tools:listitem="@layout/item_log_layout" />
+    tools:listitem="@layout/item_log_layout"
+    tools:context=".activity.SignLogActivity"/>

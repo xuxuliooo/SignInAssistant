@@ -40,4 +40,6 @@
     <string name="log_in_ok">登录成功!</string>
     <string name="back">返回</string>
     <string name="delete">删除</string>
+    <string name="no_data">暂时没有签到数据!</string>
+    <string name="confirm_delete_data">确认要删除此条签到记录吗?</string>
 </resources>

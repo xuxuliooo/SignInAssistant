@@ -1,8 +1,6 @@
 package com.chub.signinassistant.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.chub.signinassistant.R;
@@ -29,7 +27,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.sign_in_log:
-
+                startActivity(new Intent(this, SignLogActivity.class));
                 break;
             case R.id.back:
                 if (!isServiceWork(getApplicationContext(), SignInService.class.getName()))
