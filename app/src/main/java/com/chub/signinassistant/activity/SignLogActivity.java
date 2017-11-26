@@ -33,16 +33,11 @@ public class SignLogActivity extends BaseActivity implements AdapterView.OnItemC
     @Override
     protected void init() {
         lv = findViewById(R.id.lv);
+        list = SignHelp.getInstance(getApplicationContext()).findAllLog();
         adapter = new UserSignAdapter(list);
         adapter.setOnDeleteClickListener(this);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        list = SignHelp.getInstance(getApplicationContext()).findAllLog();
         if (list == null || list.isEmpty())
             showConfirmDialog(getString(R.string.no_data), new DialogInterface.OnClickListener() {
                 @Override
@@ -50,8 +45,12 @@ public class SignLogActivity extends BaseActivity implements AdapterView.OnItemC
                     finish();
                 }
             });
-        else
-            adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override

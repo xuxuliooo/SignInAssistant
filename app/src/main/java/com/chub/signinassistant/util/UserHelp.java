@@ -168,9 +168,10 @@ public class UserHelp {
         Cursor cursor = db.query(SQLiteHelp.UserTable.KEY_TABLE_NAME, null, null, null, null, null, ID);
         if (cursor != null) {
             cursor.moveToFirst();
-            while (cursor.moveToNext()) {
+            while (!cursor.isAfterLast()) {
                 if (datas == null) datas = new ArrayList<>();
                 datas.add(new LoginEntity(cursor));
+                cursor.moveToNext();
             }
             cursor.close();
         }
