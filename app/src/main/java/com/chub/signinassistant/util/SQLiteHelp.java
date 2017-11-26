@@ -71,7 +71,7 @@ public class SQLiteHelp extends SQLiteOpenHelper {
             KEY_USER_ID + " varchar," +
             KEY_USER_NAME + " varchar," +
             KEY_NICK_NAME + " varchar," +
-            KEY_USER_SEX + " varchar(1)," +
+            KEY_USER_SEX + " varchar(1) default 0," +
             KEY_USER_TEL + " varchar," +
             KEY_USER_EMAIL + " varchar," +
             KEY_USER_ICON + " varchar," +

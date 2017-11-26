@@ -31,7 +31,6 @@ import com.chub.signinassistant.bean.LoginEntity;
 import com.chub.signinassistant.bean.LoginResult;
 import com.chub.signinassistant.util.HttpUtil;
 import com.chub.signinassistant.util.UserHelp;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -226,6 +225,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         List<LoginEntity> data = response.getData();
                         if (data != null && !data.isEmpty()) {
                             LoginEntity entity = data.get(0);
+                            entity.setLogTime(String.valueOf(System.currentTimeMillis()));
                             UserHelp.getInstance(getApplicationContext()).insert(entity);
                         }
                         showSnackBar(R.string.log_in_ok, R.string.back, new OnClickListener() {

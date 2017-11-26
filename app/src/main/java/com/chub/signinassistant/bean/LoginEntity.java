@@ -285,7 +285,7 @@ public class LoginEntity {
         values.put(SQLiteHelp.UserTable.KEY_USER_ID, user_id);
         values.put(SQLiteHelp.UserTable.KEY_USER_NAME, login_name);
         values.put(SQLiteHelp.UserTable.KEY_NICK_NAME, nname);
-        values.put(SQLiteHelp.UserTable.KEY_USER_SEX, TextUtils.isEmpty(usex) ? "1" : usex);
+        values.put(SQLiteHelp.UserTable.KEY_USER_SEX, TextUtils.isEmpty(usex) ? "0" : usex);
         values.put(SQLiteHelp.UserTable.KEY_USER_TEL, login_tel);
         values.put(SQLiteHelp.UserTable.KEY_USER_ICON, u_pic_url);
         values.put(SQLiteHelp.UserTable.KEY_USER_FLAG, userflag);
