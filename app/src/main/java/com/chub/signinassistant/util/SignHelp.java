@@ -88,9 +88,10 @@ public class SignHelp {
                 null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
-            while (cursor.moveToNext()) {
+            while (!cursor.isAfterLast()) {
                 if (data == null) data = new ArrayList<>();
                 data.add(new SignBean(cursor));
+                cursor.moveToNext();
             }
             cursor.close();
         }
@@ -133,9 +134,10 @@ public class SignHelp {
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null) {
             cursor.moveToFirst();
-            while (cursor.moveToNext()) {
+            while (!cursor.isAfterLast()) {
                 if (list == null) list = new ArrayList<>();
                 list.add(new SignInLogBean(cursor));
+                cursor.moveToNext();
             }
             cursor.close();
         }

@@ -111,7 +111,7 @@ public class UserHelp {
     public LoginEntity findByUserId(String userId) {
         LoginEntity loginEntity = null;
         Cursor cursor = db.query(SQLiteHelp.UserTable.KEY_TABLE_NAME, null, KEY_USER_ID + " = ?", new String[]{userId}, null, null, null);
-        if (cursor != null && cursor.moveToNext()) {
+        if (cursor != null && cursor.moveToFirst()) {
             loginEntity = new LoginEntity(cursor);
             cursor.close();
         }
