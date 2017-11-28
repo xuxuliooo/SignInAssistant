@@ -35,7 +35,7 @@ public class Config {
     /**
      * 中国时间风格
      */
-    public static final String CHINA_TIME_STYLE = "yyyy年MM月dd日 HH时mm分ss秒";
+    public static final String CHINA_TIME_STYLE = "yyyy年MM月dd日 HH时mm分";
 
 
     /**

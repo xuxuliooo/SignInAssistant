@@ -172,9 +172,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             snackbar = Snackbar.make(getWindow().getDecorView().findViewById(android.R.id.content),
                     "",
                     Snackbar.LENGTH_LONG);
-        } else {
-            if (snackbar.isShown())
-                snackbar.dismiss();
         }
         snackbar.setText(message);
         if (onClickListener != null) {

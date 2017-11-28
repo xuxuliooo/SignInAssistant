@@ -2,7 +2,10 @@ package com.chub.signinassistant.bean;
 
 import android.database.Cursor;
 
+import com.chub.signinassistant.util.DefaultUtil;
 import com.chub.signinassistant.util.SQLiteHelp;
+
+import static com.chub.signinassistant.util.Config.CHINA_TIME_STYLE;
 
 /**
  * Description：
@@ -124,7 +127,7 @@ public class SignInLogBean {
      * @return the phone
      */
     public String getPhone() {
-        return userTel.substring(userTel.indexOf("0086") + 1);
+        return userTel.startsWith("0086") ? userTel.substring(4) : userTel;
     }
 
     /**
@@ -160,7 +163,7 @@ public class SignInLogBean {
      * @return the sign time
      */
     public String getSignTime() {
-        return signTime;
+        return DefaultUtil.dateToString(Long.valueOf(signTime), CHINA_TIME_STYLE);
     }
 
     /**
