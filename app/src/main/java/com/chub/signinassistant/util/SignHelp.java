@@ -128,9 +128,11 @@ public class SignHelp {
                 SQLiteHelp.UserTable.KEY_USER_ID +
                 " = st." +
                 SQLiteHelp.SignTable.KEY_SIGN_ID
-                + (TextUtils.isEmpty(userId) ? "" : " where st."
+                + ((TextUtils.isEmpty(userId) ? "" : " where st."
                 + SQLiteHelp.SignTable.KEY_SIGN_ID
-                + " = " + userId);
+                + " = " + userId)
+                + " order by st." + SQLiteHelp.SignTable.KEY_SIGN_TIME
+                + "  desc");
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null) {
             cursor.moveToFirst();
